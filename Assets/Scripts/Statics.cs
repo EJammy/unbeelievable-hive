@@ -6,3 +6,11 @@ public static class Singletons
 {
 	public static GameManager gameManager;
 }
+
+public static class Statistics
+{
+    #region Enemy Statistics
+    public static float enemyHealth = 1;
+    public static float enemyDamage = 1;
+    #endregion
+}

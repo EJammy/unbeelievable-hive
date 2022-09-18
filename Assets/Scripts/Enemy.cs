@@ -14,12 +14,21 @@ public class Enemy : MonoBehaviour
     private GameObject target;
     #endregion
 
+    #region Health and Damage Variables
+    private float currHp;
+    [Tooltip("How often enemies attack")]
+    public float attackSpeed;
+    private float currAttackTimer;
+    #endregion
+
     #region Unity Functions
     // Start is called before the first frame update
     void Start()
     {
         EnemyRB = GetComponent<Rigidbody2D>();
         isAttacking = false;
+        currHp = Statistics.enemyHealth;
+        currAttackTimer = 0;
     }
 
     // Update is called once per frame
@@ -31,7 +40,7 @@ public class Enemy : MonoBehaviour
             EnemyRB.velocity = direction.normalized * speed;
         } else if (target != null)
         {
-            // Attack 
+            Attack();
         } else
         {
             isAttacking = false;
@@ -44,9 +53,32 @@ public class Enemy : MonoBehaviour
             isAttacking = true;
             target = other.gameObject;
             EnemyRB.velocity = Vector2.zero;
+            currAttackTimer = 0;
         } else
         {
             Debug.Log(other.tag);
+        }
+    }
+    #endregion
+
+    #region Damage Functions
+    private void Attack()
+    {
+        if (currAttackTimer >= attackSpeed)
+        {
+            // target.transform.GetComponent<Room>().TakeDamage(Statistics.enemyDamage);
+            currAttackTimer = 0;
+        } else 
+        {
+            currAttackTimer += Time.deltaTime;
+        }
+    }
+    public void TakeDamage(float damage)
+    {
+        currHp -= damage;
+        if (currHp <= 0)
+        {
+            Destroy(this.gameObject);
         }
     }
     #endregion
