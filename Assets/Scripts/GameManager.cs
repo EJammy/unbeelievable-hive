@@ -5,12 +5,6 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-	[SerializeField]
-	Room _hivemind;
-	public Room Hivemind
-	{
-		get { return _hivemind; }
-	}
 
 	void Awake()
 	{

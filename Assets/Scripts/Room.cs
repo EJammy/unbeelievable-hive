@@ -4,45 +4,78 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
+	#region Health System
+	float hp;
+
+	public void TakeDamage(float amt) {
+		hp -= amt;
+	}
+	#endregion
+
+	#region Bug Control
 	// Use set to optimize
 	Dictionary<BugType, List<Bug>> Bugs = new();
 
 	int level = 0;
 
+	/// <summary>
+	/// Add bug to this room
+	/// </summary>
+	public void AddBug(Bug target)
+	{
+		Bugs[target.type].Add(target);
+		UpdateLevel();
+	}
+
+	void IncreaseBug(BugType type)
+	{
+		var target = Singletons.hivemind.DecreaseBug(type);
+		if (target == null) return;
+		target.WorkRoom = this;
+	}
+
+	// Remove bug and send it to the hivemind
+	Bug RemoveBug(Bug target)
+	{
+		// Performs linear search
+		Bugs[target.type].Remove(target);
+		if (Singletons.hivemind != this)
+		{
+			target.WorkRoom = Singletons.hivemind;
+		}
+		UpdateLevel();
+		return target;
+	}
+
+	Bug DecreaseBug(BugType type)
+	{
+		// Can be optimized
+		if (Bugs[type].Count > 0)
+			return RemoveBug(Bugs[type][Bugs[type].Count - 1]);
+		return null;
+	}
+	#endregion
+
 	bool hover;
 
-	// [SerializeField]
-	// KeyCode key;
-
-	void Awake()
+	virtual protected void Awake()
 	{
 		Bugs.Add(BugType.lvl0, new List<Bug>());
 	}
 
     // Start is called before the first frame update
-    void Start()
-    {
-        if (Singletons.gameManager.Hivemind == this)
-		{
-			Bugs[BugType.lvl0].Add(new Bug());
-			Bugs[BugType.lvl0].Add(new Bug());
-			Bugs[BugType.lvl0].Add(new Bug());
-			Bugs[BugType.lvl0].Add(new Bug());
-			Bugs[BugType.lvl0].Add(new Bug());
-			Bugs[BugType.lvl0].Add(new Bug());
-		}
-    }
+    virtual protected void Start()
+    { }
 
     // Update is called once per frame
-    void Update()
+    virtual protected void Update()
     {
 		if (hover)
 		{
-			if (Input.GetKeyDown(KeyCode.Mouse0)) AddBug(BugType.lvl0);
-			if (Input.GetKeyDown(KeyCode.Mouse1)) RemoveBug(BugType.lvl0);
+			if (Input.GetKeyDown(KeyCode.Mouse0)) IncreaseBug(BugType.lvl0);
+			if (Input.GetKeyDown(KeyCode.Mouse1)) DecreaseBug(BugType.lvl0);
 		}
     }
-
 
 	void OnMouseEnter()
 	{
@@ -63,40 +96,4 @@ public class Room : MonoBehaviour
 		}
 		Debug.Log(gameObject.name + ": level " + level);
 	}
-
-	void AddBug(Bug target)
-	{
-		Bugs[target.type].Add(target);
-		if (Singletons.gameManager.Hivemind != this)
-		{
-			Singletons.gameManager.Hivemind.RemoveBug(target);
-		}
-		UpdateLevel();
-	}
-
-	void AddBug(BugType type)
-	{
-		var target = Singletons.gameManager.Hivemind.RemoveBug(type);
-		Bugs[target.type].Add(target);
-		UpdateLevel();
-	}
-
-	Bug RemoveBug(Bug target)
-	{
-		// Performs linear search
-		Bugs[target.type].Remove(target);
-		if (Singletons.gameManager.Hivemind != this)
-		{
-			Singletons.gameManager.Hivemind.AddBug(target);
-		}
-		UpdateLevel();
-		return target;
-	}
-
-	Bug RemoveBug(BugType type)
-	{
-		// Can be optimized
-		return RemoveBug(Bugs[type][Bugs[type].Count - 1]);
-	}
-
 }
