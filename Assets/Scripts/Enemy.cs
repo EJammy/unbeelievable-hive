@@ -56,7 +56,7 @@ public class Enemy : MonoBehaviour
             currAttackTimer = 0;
         } else
         {
-            Debug.Log(other.tag);
+            // Debug.Log(other.tag);
         }
     }
     #endregion
