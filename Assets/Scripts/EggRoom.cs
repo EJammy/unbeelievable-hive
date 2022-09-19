@@ -2,17 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EggRoom : MonoBehaviour
+public class EggRoom : Room
 {
-    // Start is called before the first frame update
-    void Start()
+	[SerializeField]
+	Bug spawnBug;
+
+    protected override void Action()
     {
-        
+		Instantiate(spawnBug);
+        base.Action();
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void Awake()
     {
-        
+        base.Awake();
+    }
+
+    protected override float CalcLevel()
+    {
+        return base.CalcLevel();
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+    }
+
+    protected override void Update()
+    {
+        base.Update();
     }
 }

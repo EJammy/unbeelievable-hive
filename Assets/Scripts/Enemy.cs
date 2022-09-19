@@ -66,7 +66,7 @@ public class Enemy : MonoBehaviour
     {
         if (currAttackTimer >= attackSpeed)
         {
-            // target.transform.GetComponent<Room>().TakeDamage(Statistics.enemyDamage);
+            target.transform.GetComponent<Room>().TakeDamage(Statistics.enemyDamage);
             currAttackTimer = 0;
         } else 
         {

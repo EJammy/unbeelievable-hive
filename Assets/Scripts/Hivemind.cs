@@ -15,11 +15,14 @@ public class Hivemind : Room
 
     protected override void Start()
     {
-		AddBug(Instantiate(SpawnBug, transform.position, transform.rotation));
-		AddBug(Instantiate(SpawnBug, transform.position, transform.rotation));
-		AddBug(Instantiate(SpawnBug, transform.position, transform.rotation));
-		AddBug(Instantiate(SpawnBug, transform.position, transform.rotation));
-		AddBug(Instantiate(SpawnBug, transform.position, transform.rotation));
+		Instantiate(SpawnBug, transform.position, transform.rotation);
+		Instantiate(SpawnBug, transform.position, transform.rotation);
+		Instantiate(SpawnBug, transform.position, transform.rotation);
+		Instantiate(SpawnBug, transform.position, transform.rotation);
+		Instantiate(SpawnBug, transform.position, transform.rotation);
+		// Instantiate(SpawnBug, transform.position, transform.rotation);
+		// Instantiate(SpawnBug, transform.position, transform.rotation);
+		// Instantiate(SpawnBug, transform.position, transform.rotation);
         base.Start();
     }
 

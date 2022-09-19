@@ -4,64 +4,103 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-	#region Health System
-	float hp;
+    #region Health System
+    float hp = 15;
 
-	public void TakeDamage(float amt) {
-		hp -= amt;
-	}
-	#endregion
+    public void TakeDamage(float amt) {
+        hp -= amt;
+        if (hp < 0)
+        {
+            DestroyRoom();
+        }
+    }
 
-	#region Bug Control
-	// Use set to optimize
-	Dictionary<BugType, List<Bug>> Bugs = new();
+    virtual protected void DestroyRoom()
+    {
+        foreach (var item in Bugs)
+        {
+            foreach (var bug in item.Value)
+            {
+                bug.WorkRoom = Singletons.hivemind;
+            }
+        }
+        Destroy(gameObject);
+    }
+    #endregion
 
-	int level = 0;
+    #region Bug Control
+    // Use set to optimize
+    Dictionary<BugType, List<Bug>> Bugs = new();
 
-	/// <summary>
-	/// Add bug to this room
-	/// </summary>
-	public void AddBug(Bug target)
-	{
-		Bugs[target.type].Add(target);
-		UpdateLevel();
-	}
+    /// <summary>
+    /// Add bug to this room
+    /// </summary>
+    public void AddBug(Bug target)
+    {
+        Bugs[target.type].Add(target);
+        UpdateLevel();
+    }
 
-	void IncreaseBug(BugType type)
-	{
-		var target = Singletons.hivemind.DecreaseBug(type);
-		if (target == null) return;
-		target.WorkRoom = this;
-	}
+    void IncreaseBug(BugType type)
+    {
+        var target = Singletons.hivemind.LastBug(type);
+        if (target == null) return;
+        target.WorkRoom = this;
+    }
 
-	// Remove bug and send it to the hivemind
-	Bug RemoveBug(Bug target)
-	{
-		// Performs linear search
-		Bugs[target.type].Remove(target);
-		if (Singletons.hivemind != this)
-		{
-			target.WorkRoom = Singletons.hivemind;
-		}
-		UpdateLevel();
-		return target;
-	}
+    // Remove bug
+    public void RemoveBug(Bug target)
+    {
+        // Performs linear search
+        Bugs[target.type].Remove(target);
+        UpdateLevel();
+    }
 
-	Bug DecreaseBug(BugType type)
-	{
-		// Can be optimized
-		if (Bugs[type].Count > 0)
-			return RemoveBug(Bugs[type][Bugs[type].Count - 1]);
-		return null;
-	}
-	#endregion
+    public Bug LastBug(BugType type)
+    {
+        if (Bugs[type].Count > 0)
+            return Bugs[type][Bugs[type].Count - 1];
+        return null;
+    }
 
-	bool hover;
+    void DecreaseBug(BugType type)
+    {
+        // Can be optimized
+        if (LastBug(type) != null)
+            LastBug(type).WorkRoom = Singletons.hivemind;
+    }
+    #endregion
 
-	virtual protected void Awake()
-	{
-		Bugs.Add(BugType.lvl0, new List<Bug>());
-	}
+    #region Action control
+    float amt = 0;
+    float level = 0;
+
+    virtual protected void Action()
+    {}
+
+    virtual protected float CalcLevel()
+    {
+        var ret = 0;
+        foreach (var item in Bugs)
+        {
+            ret += (((int)item.Key) + 1) * item.Value.Count;
+        }
+        return ret/10f;
+    }
+
+    void UpdateLevel()
+    {
+        level = CalcLevel();
+        Debug.Log(gameObject.name + ": level " + level);
+    }
+    #endregion
+
+    bool hover;
+
+    virtual protected void Awake()
+    {
+        Bugs.Add(BugType.lvl0, new List<Bug>());
+    }
 
     // Start is called before the first frame update
     virtual protected void Start()
@@ -70,30 +109,29 @@ public class Room : MonoBehaviour
     // Update is called once per frame
     virtual protected void Update()
     {
-		if (hover)
-		{
-			if (Input.GetKeyDown(KeyCode.Mouse0)) IncreaseBug(BugType.lvl0);
-			if (Input.GetKeyDown(KeyCode.Mouse1)) DecreaseBug(BugType.lvl0);
-		}
+        if (hover)
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0)) IncreaseBug(BugType.lvl0);
+            if (Input.GetKeyDown(KeyCode.Mouse1)) DecreaseBug(BugType.lvl0);
+        }
+
+        level = CalcLevel();
+        amt += level * Time.deltaTime;
+        while (amt > 1) {
+            amt -= 1;
+            Action();
+        }
     }
 
-	void OnMouseEnter()
-	{
-		hover = true;
-	}
+    void OnMouseEnter()
+    {
+        hover = true;
+    }
 
-	void OnMouseExit()
-	{
-		hover = false;
-	}
+    void OnMouseExit()
+    {
+        hover = false;
+    }
 
-	void UpdateLevel()
-	{
-		level = 0;
-		foreach (var item in Bugs)
-		{
-			level += (((int)item.Key) + 1) * item.Value.Count;
-		}
-		Debug.Log(gameObject.name + ": level " + level);
-	}
+
 }
