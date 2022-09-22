@@ -4,31 +4,32 @@ using UnityEngine;
 
 public class Hivemind : Room
 {
-	[SerializeField]
-	Bug SpawnBug;
+    [SerializeField]
+    Bug SpawnBug;
 
 
     protected override void Awake()
     {
-		Singletons.hivemind = this;
+        Singletons.hivemind = this;
         base.Awake();
     }
 
     protected override void Start()
     {
-		Instantiate(SpawnBug, transform.position, transform.rotation);
-		Instantiate(SpawnBug, transform.position, transform.rotation);
-		Instantiate(SpawnBug, transform.position, transform.rotation);
-		Instantiate(SpawnBug, transform.position, transform.rotation);
-		Instantiate(SpawnBug, transform.position, transform.rotation);
-		// Instantiate(SpawnBug, transform.position, transform.rotation);
-		// Instantiate(SpawnBug, transform.position, transform.rotation);
-		// Instantiate(SpawnBug, transform.position, transform.rotation);
+        for (var i = 0; i < 30; i++)
+            Instantiate(SpawnBug, transform.position, transform.rotation);
+        // Instantiate(SpawnBug, transform.position, transform.rotation);
+        // Instantiate(SpawnBug, transform.position, transform.rotation);
+        // Instantiate(SpawnBug, transform.position, transform.rotation);
         base.Start();
     }
 
     protected override void Update()
     {
         base.Update();
+    }
+
+    protected override void MouseAction()
+    {
     }
 }

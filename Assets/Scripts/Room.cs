@@ -125,8 +125,7 @@ public class Room : MonoBehaviour
     {
         if (hover)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0)) IncreaseBug(BugType.lvl0);
-            if (Input.GetKeyDown(KeyCode.Mouse1)) DecreaseBug(BugType.lvl0);
+			MouseAction();
         }
 
         level = CalcLevel();
@@ -140,6 +139,12 @@ public class Room : MonoBehaviour
             Action();
         }
     }
+
+	virtual protected void MouseAction()
+	{
+		if (Input.GetKeyDown(KeyCode.Mouse0)) IncreaseBug(BugType.lvl0);
+		if (Input.GetKeyDown(KeyCode.Mouse1)) DecreaseBug(BugType.lvl0);
+	}
 
     void OnMouseEnter()
     {

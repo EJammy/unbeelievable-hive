@@ -13,10 +13,10 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI honeyCount;
 
     void Awake()
-	{
-		DontDestroyOnLoad(gameObject);
-		Singletons.gameManager = this;
-	}
+    {
+        DontDestroyOnLoad(gameObject);
+        Singletons.gameManager = this;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -30,15 +30,26 @@ public class GameManager : MonoBehaviour
     {
         beeCount.text = "x  " + Singletons.hivemind.GetBugAmount();
         honeyCount.text = "Honey:  $" + Statistics.honey;
+        if (Input.GetKeyDown(KeyCode.Mouse0)) trySpawnBee();
     }
 
-    void OnMouseDown()
+    bool checkPlacement(Vector3 pos)
     {
-
-        var target = Singletons.hivemind.LastBug(BugType.lvl0);
-        if (target != null)
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(pos, 0.5f, Vector2.up, 0);
+        foreach (var obj in hits)
         {
-            var spawnPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            // Debug.Log(obj.transform.tag);
+            if (obj.transform.tag == "Room" || obj.transform.tag == "Occupied") return false;
+        }
+        return true;
+    }
+
+    void trySpawnBee()
+    {
+        var spawnPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        var target = Singletons.hivemind.LastBug(BugType.lvl0);
+        if (checkPlacement(spawnPos) && target != null)
+        {
             spawnPos.z = Camera.main.nearClipPlane;
             target.WorkRoom = null;
             Instantiate(defender, spawnPos, Quaternion.identity);
