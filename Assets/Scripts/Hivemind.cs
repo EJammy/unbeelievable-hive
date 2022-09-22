@@ -7,6 +7,7 @@ public class Hivemind : Room
 	[SerializeField]
 	Bug SpawnBug;
 
+
     protected override void Awake()
     {
 		Singletons.hivemind = this;

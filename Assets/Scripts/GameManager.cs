@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
 
     [SerializeField]
     BeeDefender defender;
+
+    public TextMeshProUGUI beeCount;
 
 	void Awake()
 	{
@@ -17,13 +20,13 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        beeCount.text = "x  " + Singletons.hivemind.GetBugAmount();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        beeCount.text = "x  " + Singletons.hivemind.GetBugAmount();
     }
 
     void OnMouseDown()

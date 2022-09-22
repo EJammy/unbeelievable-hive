@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Room : MonoBehaviour
 {
     #region Health System
     float hp = 15;
+    public Slider hpSlider;
 
     public void TakeDamage(float amt) {
         hp -= amt;
+        hpSlider.value = Mathf.Max(hp / Statistics.roomMaxHp, 0);
         if (hp < 0)
         {
             DestroyRoom();
@@ -68,6 +71,16 @@ public class Room : MonoBehaviour
         // Can be optimized
         if (LastBug(type) != null)
             LastBug(type).WorkRoom = Singletons.hivemind;
+    }
+
+    public int GetBugAmount()
+    {
+        var ret = 0;
+        foreach (var item in Bugs)
+        {
+            ret += (((int)item.Key) + 1) * item.Value.Count;
+        }
+        return ret;
     }
     #endregion
 

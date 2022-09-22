@@ -26,4 +26,8 @@ public static class Statistics
     public static float beeHeal = 1;
     public static float beeAttackSpeed = 1;
     #endregion
+
+    #region Room Stats
+    public static float roomMaxHp = 15;
+    #endregion
 }
