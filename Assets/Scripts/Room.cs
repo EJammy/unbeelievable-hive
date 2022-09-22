@@ -83,6 +83,13 @@ public class Room : MonoBehaviour
         }
         return ret;
     }
+
+    // Override this function to disable adding bug / change behaviour of click actions
+    virtual protected void MouseAction()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse0)) IncreaseBug(BugType.lvl0);
+        if (Input.GetKeyDown(KeyCode.Mouse1)) DecreaseBug(BugType.lvl0);
+    }
     #endregion
 
     #region Action control
@@ -111,6 +118,7 @@ public class Room : MonoBehaviour
 
     bool hover;
 
+#region Unity Functions
     virtual protected void Awake()
     {
         Bugs.Add(BugType.lvl0, new List<Bug>());
@@ -140,12 +148,6 @@ public class Room : MonoBehaviour
         }
     }
 
-    virtual protected void MouseAction()
-    {
-        if (Input.GetKeyDown(KeyCode.Mouse0)) IncreaseBug(BugType.lvl0);
-        if (Input.GetKeyDown(KeyCode.Mouse1)) DecreaseBug(BugType.lvl0);
-    }
-
     void OnMouseEnter()
     {
         hover = true;
@@ -155,6 +157,7 @@ public class Room : MonoBehaviour
     {
         hover = false;
     }
+#endregion
 
 
 }

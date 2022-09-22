@@ -1,18 +1,20 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+#region BugType Enum
 public enum BugType
 {
     lvl0,
     lvl1,
     lvl2
 }
+#endregion
 
 public class Bug : MonoBehaviour
 {
+
+#region Bug variables
     public BugType type { get; private set; }
 
     Room _workRoom;
@@ -30,7 +32,14 @@ public class Bug : MonoBehaviour
             }
         }
     }
+#endregion
 
+#region Update Variables
+    float moveTimer = 0;
+    bool moving = false;
+#endregion
+
+#region Unity Functions
     void Start()
     {
         _workRoom = Singletons.hivemind;
@@ -38,8 +47,6 @@ public class Bug : MonoBehaviour
         transform.position = _workRoom.transform.position + (new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f)));
     }
 
-    float moveTimer = 0;
-    bool moving = false;
     void Update()
     {
         if (moving) return;
@@ -54,7 +61,9 @@ public class Bug : MonoBehaviour
             }
         }
     }
+#endregion
 
+#region Helper functions / Coroutines
     Vector2 RandomTarget()
     {
         Vector2 pos;
@@ -82,5 +91,6 @@ public class Bug : MonoBehaviour
         WorkRoom.AddBug(this);
         transform.position = RandomTarget();
     }
+#endregion
 
 }

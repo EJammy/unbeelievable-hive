@@ -6,12 +6,15 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
 
+#region Serialized Variables
     [SerializeField]
     BeeDefender defender;
 
     public TextMeshProUGUI beeCount;
     public TextMeshProUGUI honeyCount;
+#endregion
 
+#region Unity Functions
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -32,7 +35,9 @@ public class GameManager : MonoBehaviour
         honeyCount.text = "Honey:  $" + Statistics.honey;
         if (Input.GetKeyDown(KeyCode.Mouse0)) trySpawnBee();
     }
+#endregion
 
+#region Helper Functions
     bool checkPlacement(Vector3 pos)
     {
         RaycastHit2D[] hits = Physics2D.CircleCastAll(pos, 0.5f, Vector2.up, 0);
@@ -55,4 +60,5 @@ public class GameManager : MonoBehaviour
             Instantiate(defender, spawnPos, Quaternion.identity);
         }
     }
+#endregion
 }
