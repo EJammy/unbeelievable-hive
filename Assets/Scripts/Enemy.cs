@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     #region Movement Variables
-    public float speed;
+    private float speed;
     private Rigidbody2D EnemyRB;
     #endregion
 
@@ -29,6 +29,7 @@ public class Enemy : MonoBehaviour
         isAttacking = false;
         currHp = Statistics.enemyHealth;
         currAttackTimer = 0;
+        speed = Statistics.enemySpeed;
     }
 
     // Update is called once per frame
@@ -68,6 +69,8 @@ public class Enemy : MonoBehaviour
         {
             target.transform.GetComponent<Room>().TakeDamage(Statistics.enemyDamage);
             currAttackTimer = 0;
+            Vector2 direction = Vector3.zero - transform.position;
+            EnemyRB.velocity = direction.normalized * -0.001f;
         } else 
         {
             currAttackTimer += Time.deltaTime;

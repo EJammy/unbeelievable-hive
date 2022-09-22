@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65bf9d1548423cf418b64694dc6fde4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 1
   attackSpeed: 2
 --- !u!58 &8335353613793879141
 CircleCollider2D:
