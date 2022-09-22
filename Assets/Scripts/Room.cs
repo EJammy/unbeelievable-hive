@@ -8,6 +8,7 @@ public class Room : MonoBehaviour
     #region Health System
     float hp = 15;
     public Slider hpSlider;
+    public Slider progressSlider;
 
     public void TakeDamage(float amt) {
         hp -= amt;
@@ -130,6 +131,10 @@ public class Room : MonoBehaviour
 
         level = CalcLevel();
         amt += level * Time.deltaTime;
+        if (progressSlider != null)
+        {
+            progressSlider.value = Mathf.Min(amt, 1);
+        }
         while (amt > 1) {
             amt -= 1;
             Action();

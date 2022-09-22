@@ -6,6 +6,7 @@ public class HoneyRoom : Room
 {
     protected override void Action()
     {
+        Statistics.honey += 1;
         base.Action();
     }
 

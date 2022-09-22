@@ -30,4 +30,10 @@ public static class Statistics
     #region Room Stats
     public static float roomMaxHp = 15;
     #endregion
+
+    #region Upgrade Stats
+    public static float upgradeAtkSpdPrice = 20;
+    public static float upgradeAtkDmgPrice = 20;
+    public static float upgradeWallHealthPrice = 20;
+    #endregion
 }

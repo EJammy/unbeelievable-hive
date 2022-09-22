@@ -10,8 +10,9 @@ public class GameManager : MonoBehaviour
     BeeDefender defender;
 
     public TextMeshProUGUI beeCount;
+    public TextMeshProUGUI honeyCount;
 
-	void Awake()
+    void Awake()
 	{
 		DontDestroyOnLoad(gameObject);
 		Singletons.gameManager = this;
@@ -21,12 +22,14 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         beeCount.text = "x  " + Singletons.hivemind.GetBugAmount();
+        honeyCount.text = "Honey:  $" + Statistics.honey;
     }
 
     // Update is called once per frame
     void Update()
     {
         beeCount.text = "x  " + Singletons.hivemind.GetBugAmount();
+        honeyCount.text = "Honey:  $" + Statistics.honey;
     }
 
     void OnMouseDown()
