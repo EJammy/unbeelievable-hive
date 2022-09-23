@@ -35,6 +35,21 @@ public class BeeDefender : MonoBehaviour
         {
             currAttackTimer += Time.deltaTime;
         }
+        if (target != null)
+        {
+            var angle = Vector2.Angle(Vector2.up, (transform.position - target.transform.position )) - 90;
+            if (transform.position.x < target.transform.position.x)
+            {
+                GetComponent<SpriteRenderer>().flipX = true;
+            }
+            else
+            {
+                angle = -angle;
+                GetComponent<SpriteRenderer>().flipX = false;
+            }
+            transform.eulerAngles = 
+                new Vector3(0, 0, angle);
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -58,6 +73,7 @@ public class BeeDefender : MonoBehaviour
     private void Attack()
     {
         // Debug.Log("Attacking");
+        GetComponent<Animator>().SetTrigger("Attack");
         target.GetComponent<Enemy>().TakeDamage(Statistics.beeAttack);
         currAttackTimer = 0;
     }

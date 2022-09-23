@@ -95,7 +95,8 @@ public class Bug : MonoBehaviour
         if (start.x < end.x)
         {
             sprite.flipX = true;
-        } else if (start.x > end.x)
+        }
+        else if (start.x > end.x)
         {
             sprite.flipX = false;
         }
