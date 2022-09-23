@@ -23,6 +23,8 @@ public class Enemy : MonoBehaviour
 
     #region Sprite Variables
     private SpriteRenderer sprite;
+    private CircleCollider2D circleCollider;
+    private Animator anim;
     #endregion
 
     #region Unity Functions
@@ -35,10 +37,17 @@ public class Enemy : MonoBehaviour
         currAttackTimer = 0;
         speed = Statistics.enemySpeed;
         sprite = GetComponent<SpriteRenderer>();
+        circleCollider = GetComponent<CircleCollider2D>();
         if (this.transform.position.x > 0)
         {
             sprite.flipX = true;
+            circleCollider.offset = new Vector2(-2, 0);
+        } else
+        {
+            circleCollider.offset = new Vector2(2, 0);
         }
+        anim = GetComponent<Animator>();
+        anim.SetBool("isAttacking", false);
     }
 
     // Update is called once per frame
@@ -50,7 +59,14 @@ public class Enemy : MonoBehaviour
             EnemyRB.velocity = direction.normalized * speed;
         } else if (target != null)
         {
-            Attack();
+            if (currAttackTimer >= attackSpeed)
+            {
+                StartCoroutine(Attack());
+            }
+            else if (!anim.GetBool("isAttacking"))
+            {
+                currAttackTimer += Time.deltaTime;
+            }
         } else
         {
             isAttacking = false;
@@ -77,19 +93,18 @@ public class Enemy : MonoBehaviour
     #endregion
 
     #region Damage Functions
-    private void Attack()
+    IEnumerator Attack()
     {
-        if (currAttackTimer >= attackSpeed)
-        {
-            target.transform.GetComponent<Room>().TakeDamage(Statistics.enemyDamage);
-            currAttackTimer = 0;
-            Vector2 direction = Vector3.zero - transform.position;
-            EnemyRB.velocity = direction.normalized * -0.001f;
-        } else 
-        {
-            currAttackTimer += Time.deltaTime;
-        }
+        anim.SetBool("isAttacking", true);
+        currAttackTimer = 0;
+        yield return new WaitForSeconds(1);
+        target.transform.GetComponent<Room>().TakeDamage(Statistics.enemyDamage);
+        Vector2 direction = Vector3.zero - transform.position;
+        EnemyRB.velocity = direction.normalized * -0.001f;
+        anim.SetBool("isAttacking", false);
+        yield return null;
     }
+
     public void TakeDamage(float damage)
     {
         currHp -= damage;
