@@ -57,7 +57,7 @@ public class BeeDefender : MonoBehaviour
     #region Attack Functions
     private void Attack()
     {
-        Debug.Log("Attacking");
+        // Debug.Log("Attacking");
         target.GetComponent<Enemy>().TakeDamage(Statistics.beeAttack);
         currAttackTimer = 0;
     }

@@ -42,6 +42,7 @@ public class Room : MonoBehaviour
     public void AddBug(Bug target)
     {
         Bugs[target.type].Add(target);
+        Debug.Log("Added Bug to: " + gameObject.name + ' ' + level);
         UpdateLevel();
     }
 
@@ -112,7 +113,6 @@ public class Room : MonoBehaviour
     void UpdateLevel()
     {
         level = CalcLevel();
-        Debug.Log(gameObject.name + ": level " + level);
     }
     #endregion
 
@@ -158,6 +158,5 @@ public class Room : MonoBehaviour
         hover = false;
     }
 #endregion
-
 
 }

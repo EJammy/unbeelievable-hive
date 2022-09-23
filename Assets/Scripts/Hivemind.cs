@@ -7,6 +7,9 @@ public class Hivemind : Room
     [SerializeField]
     Bug SpawnBug;
 
+    [SerializeField]
+    UpgradeMenu upgradeMenu;
+
     protected override void Awake()
     {
         Singletons.hivemind = this;
@@ -16,7 +19,7 @@ public class Hivemind : Room
     protected override void Start()
     {
         for (var i = 0; i < 30; i++)
-            Instantiate(SpawnBug, transform.position, transform.rotation);
+            Singletons.gameManager.SpawnBug();
         // Instantiate(SpawnBug, transform.position, transform.rotation);
         // Instantiate(SpawnBug, transform.position, transform.rotation);
         // Instantiate(SpawnBug, transform.position, transform.rotation);
@@ -30,5 +33,9 @@ public class Hivemind : Room
 
     protected override void MouseAction()
     {
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            upgradeMenu.HandleMenu();
+        }
     }
 }
