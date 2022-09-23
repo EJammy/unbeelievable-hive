@@ -74,10 +74,10 @@ public class GameManager : MonoBehaviour
             {
                 placeholder.GetComponent<SpriteRenderer>().flipX = true;
             }
-            target.Deploy(spawnPos);
-            // target.Deploy(spawnPos, () => {
-            //     Instantiate(defender, spawnPos, Quaternion.identity);
-            // });
+            target.Deploy(spawnPos, () => {
+                Destroy(placeholder);
+                Instantiate(defender, spawnPos, Quaternion.identity);
+            });
         }
     }
 #endregion

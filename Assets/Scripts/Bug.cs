@@ -33,9 +33,11 @@ public class Bug : MonoBehaviour
     }
 
     // TODO: use System.Action callback
-    public void Deploy(Vector2 pos)
+    private System.Action deployFunc;
+    public void Deploy(Vector2 pos, System.Action func)
     {
         StopAllCoroutines();
+        deployFunc = func;
         WorkRoom = null;
         StartCoroutine(MoveTo(transform.position, pos));
     }
@@ -60,7 +62,8 @@ public class Bug : MonoBehaviour
         if (moving) return;
 
         if (WorkRoom == null) {
-            Instantiate(Singletons.gameManager.defender, transform.position, transform.rotation);
+            // Instantiate(Singletons.gameManager.defender, transform.position, transform.rotation);
+            deployFunc();
             Destroy(gameObject);
             return;
         }
