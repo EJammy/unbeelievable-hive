@@ -18,7 +18,7 @@ public class Hivemind : Room
 
     protected override void Start()
     {
-        for (var i = 0; i < 30; i++)
+        for (var i = 0; i < 5; i++)
             Singletons.gameManager.SpawnBug();
         // Instantiate(SpawnBug, transform.position, transform.rotation);
         // Instantiate(SpawnBug, transform.position, transform.rotation);

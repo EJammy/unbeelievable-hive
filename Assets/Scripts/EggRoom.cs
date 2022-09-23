@@ -18,7 +18,7 @@ public class EggRoom : Room
 
     protected override float CalcLevel()
     {
-        return base.CalcLevel();
+        return 0.1f + base.CalcLevel()*0.2f;
     }
 
     protected override void Start()
