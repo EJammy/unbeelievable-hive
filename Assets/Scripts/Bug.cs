@@ -24,7 +24,9 @@ public class Bug : MonoBehaviour
             _workRoom = value;
             if (value != null)
             {
-                StartCoroutine(DelayMove());
+                _workRoom.AddBug(this);
+                StopAllCoroutines();
+                StartCoroutine(MoveTo(transform.position, RandomTarget()));
             }
         }
     }
@@ -96,11 +98,6 @@ public class Bug : MonoBehaviour
         moving = false;
     }
 
-    IEnumerator DelayMove() {
-        yield return new WaitForSeconds(0.1f);
-        WorkRoom.AddBug(this);
-        transform.position = RandomTarget();
-    }
 #endregion
 
 }
