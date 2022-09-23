@@ -36,14 +36,14 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         beeCount.text = "x  " + Singletons.hivemind.GetBugAmount();
-        honeyCount.text = "Honey:  $" + Statistics.honey;
+        honeyCount.text = "Honey:  $ " + Statistics.honey;
     }
 
     // Update is called once per frame
     void Update()
     {
         beeCount.text = "x  " + Singletons.hivemind.GetBugAmount();
-        honeyCount.text = "Honey:  $" + Statistics.honey;
+        honeyCount.text = "Honey:  $ " + Statistics.honey;
         if (!Singletons.isUpgradeMenuOpen && Input.GetKeyDown(KeyCode.Mouse0)) trySpawnBee();
     }
 #endregion
