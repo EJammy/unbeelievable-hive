@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     {
         beeCount.text = "x  " + Singletons.hivemind.GetBugAmount();
         honeyCount.text = "Honey:  $" + Statistics.honey;
-        if (Input.GetKeyDown(KeyCode.Mouse0)) trySpawnBee();
+        if (!Singletons.isUpgradeMenuOpen && Input.GetKeyDown(KeyCode.Mouse0)) trySpawnBee();
     }
 #endregion
 
@@ -69,7 +69,11 @@ public class GameManager : MonoBehaviour
         {
             // target.WorkRoom = null;
             // Instantiate(defender, spawnPos, Quaternion.identity);
-            Instantiate(defenderPlaceholder, spawnPos, Quaternion.identity);
+            GameObject placeholder = Instantiate(defenderPlaceholder, spawnPos, Quaternion.identity);
+            if (spawnPos.x > 0)
+            {
+                placeholder.GetComponent<SpriteRenderer>().flipX = true;
+            }
             target.Deploy(spawnPos);
             // target.Deploy(spawnPos, () => {
             //     Instantiate(defender, spawnPos, Quaternion.identity);

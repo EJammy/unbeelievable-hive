@@ -9,11 +9,20 @@ public class BeeDefender : MonoBehaviour
     private float currAttackTimer;
     #endregion
 
+    #region Sprite Variables
+    private SpriteRenderer sprite;
+    #endregion
+
     #region Unity Functions
     // Start is called before the first frame update
     void Start()
     {
         currAttackTimer = 0;
+        sprite = GetComponent<SpriteRenderer>();
+        if (this.transform.position.x > 0)
+        {
+            sprite.flipX = true;
+        }
     }
 
     // Update is called once per frame

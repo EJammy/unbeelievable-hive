@@ -6,7 +6,7 @@ using TMPro;
 public class UpgradeMenu : MonoBehaviour
 {
     #region Menu Variables
-    private bool isOpen;
+    public bool isOpen;
     public GameObject upgradeMenu;
 
     public TextMeshProUGUI textAtkDmg;
@@ -17,12 +17,12 @@ public class UpgradeMenu : MonoBehaviour
     #region Unity Functions
     private void Start()
     {
-        isOpen = false;
+        Singletons.isUpgradeMenuOpen = false;
         upgradeMenu.SetActive(false);
     }
     private void Update()
     {
-        if (isOpen)
+        if (Singletons.isUpgradeMenuOpen)
         {
             textAtkDmg.text = "$ " + Statistics.upgradeAtkDmgPrice;
             textAtkSpd.text = "$ " + Statistics.upgradeAtkSpdPrice;
@@ -34,19 +34,29 @@ public class UpgradeMenu : MonoBehaviour
     #region Menu Functions
     public void HandleMenu()
     {
-        upgradeMenu.SetActive(!isOpen);
-        isOpen = !isOpen;
+        upgradeMenu.SetActive(!Singletons.isUpgradeMenuOpen);
+        Singletons.isUpgradeMenuOpen = !Singletons.isUpgradeMenuOpen;
     }
     #endregion
 
     #region Upgrade Functions
     public void UpgradeWallHealth()
     {
+        if (Statistics.honey < Statistics.upgradeWallHealthPrice)
+        {
+            return;
+        }
+        Statistics.honey -= Statistics.upgradeWallHealthPrice;
         Statistics.upgradeWallHealthPrice = CalcNewPrice(Statistics.upgradeWallHealthPrice);
     }
 
     public void UpgradeBeeDamage()
     {
+        if (Statistics.honey < Statistics.upgradeAtkDmgPrice)
+        {
+            return;
+        }
+        Statistics.honey -= Statistics.upgradeAtkDmgPrice;
         Statistics.beeAttack += 1;
         Debug.Log("Attack is now " + Statistics.beeAttack);
         Statistics.upgradeAtkDmgPrice = CalcNewPrice(Statistics.upgradeAtkDmgPrice);
@@ -54,7 +64,12 @@ public class UpgradeMenu : MonoBehaviour
 
     public void UpgradeBeeAttackSpeed()
     {
-        Statistics.beeAttackSpeed -= 0.1f;
+        if (Statistics.honey < Statistics.upgradeAtkSpdPrice)
+        {
+            return;
+        }
+        Statistics.honey -= Statistics.upgradeAtkSpdPrice;
+        Statistics.beeAttackSpeed -= 0.05f;
         Debug.Log("Attack speed " + Statistics.beeAttackSpeed);
         Statistics.upgradeAtkSpdPrice = CalcNewPrice(Statistics.upgradeAtkSpdPrice);
     }

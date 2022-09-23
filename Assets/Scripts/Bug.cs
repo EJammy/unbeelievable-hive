@@ -16,6 +16,7 @@ public class Bug : MonoBehaviour
 
 #region Public bug variables and functions
     public BugType type { get; private set; }
+    private SpriteRenderer sprite;
 
     Room _workRoom;
     public Room WorkRoom { get { return _workRoom; }
@@ -51,6 +52,7 @@ public class Bug : MonoBehaviour
         _workRoom = Singletons.hivemind;
         _workRoom.AddBug(this);
         transform.position = _workRoom.transform.position + (new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f)));
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -90,6 +92,13 @@ public class Bug : MonoBehaviour
     {
         moving = true;
         const int total = 30;
+        if (start.x < end.x)
+        {
+            sprite.flipX = true;
+        } else if (start.x > end.x)
+        {
+            sprite.flipX = false;
+        }
         for (int i = 1; i <= total; i++)
         {
             yield return new WaitForSeconds(0.05f);

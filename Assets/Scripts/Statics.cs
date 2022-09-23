@@ -6,6 +6,7 @@ public static class Singletons
 {
     public static GameManager gameManager;
     public static Hivemind hivemind;
+    public static bool isUpgradeMenuOpen;
 }
 
 public static class Statistics

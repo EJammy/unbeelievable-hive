@@ -142,9 +142,13 @@ public class SpawnManager : MonoBehaviour
             spawnTime = 4;
         } else if (Time.timeSinceLevelLoad > 240)
         {
-            timeBetweenSpawns = 0;
+            timeBetweenSpawns = 0.1f;
             Statistics.enemyHealth += 1;
             spawnTime = 3;
+        } else if (Time.timeSinceLevelLoad > 360)
+        {
+            Statistics.enemyHealth += 1;
+            spawnTime = 0;
         }
         numToSpawn += 2;
 
