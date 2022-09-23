@@ -5,12 +5,9 @@ using UnityEngine.UI;
 
 public class EggRoom : Room
 {
-    [SerializeField]
-    Bug spawnBug;
-
     protected override void Action()
     {
-        Instantiate(spawnBug);
+        Singletons.gameManager.SpawnBug();
         base.Action();
     }
 

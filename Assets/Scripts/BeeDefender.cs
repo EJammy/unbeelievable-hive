@@ -5,7 +5,7 @@ using UnityEngine;
 public class BeeDefender : MonoBehaviour
 {
     #region Attacking variables
-    public GameObject target;
+    GameObject target;
     private float currAttackTimer;
     #endregion
 

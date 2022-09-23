@@ -14,7 +14,7 @@ public enum BugType
 public class Bug : MonoBehaviour
 {
 
-#region Bug variables
+#region Public bug variables and functions
     public BugType type { get; private set; }
 
     Room _workRoom;
@@ -26,11 +26,15 @@ public class Bug : MonoBehaviour
             {
                 StartCoroutine(DelayMove());
             }
-            else
-            {
-                Destroy(gameObject);
-            }
         }
+    }
+
+    // TODO: use System.Action callback
+    public void Deploy(Vector2 pos)
+    {
+        StopAllCoroutines();
+        WorkRoom = null;
+        StartCoroutine(MoveTo(transform.position, pos));
     }
 #endregion
 
@@ -51,6 +55,12 @@ public class Bug : MonoBehaviour
     {
         if (moving) return;
 
+        if (WorkRoom == null) {
+            Instantiate(Singletons.gameManager.defender, transform.position, transform.rotation);
+            Destroy(gameObject);
+            return;
+        }
+
         moveTimer += Time.deltaTime;
         if (moveTimer > 1)
         {
@@ -70,7 +80,7 @@ public class Bug : MonoBehaviour
         do
         {
             pos = new Vector2(Random.Range(-10f, 10f), Random.Range(-10f,10f));
-        } while ( !_workRoom.GetComponent<Collider2D>().OverlapPoint(pos) );
+        } while ( !WorkRoom.GetComponent<Collider2D>().OverlapPoint(pos) );
         return pos;
     }
 
@@ -78,7 +88,7 @@ public class Bug : MonoBehaviour
     {
         moving = true;
         const int total = 30;
-        for (int i = 0; i < total; i++)
+        for (int i = 1; i <= total; i++)
         {
             yield return new WaitForSeconds(0.05f);
             transform.position = Vector2.Lerp(start, end, ((float)i)/total);

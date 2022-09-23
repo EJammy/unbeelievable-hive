@@ -46,7 +46,12 @@ public class Enemy : MonoBehaviour
         {
             isAttacking = false;
         }
+
+        if (Input.GetKeyDown(KeyCode.Mouse1) && GetComponent<Collider2D>().OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition)))
+        {
+        }
     }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.transform.CompareTag("Room"))

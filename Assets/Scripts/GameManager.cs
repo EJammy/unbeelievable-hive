@@ -8,7 +8,18 @@ public class GameManager : MonoBehaviour
 
 #region Serialized Variables
     [SerializeField]
-    BeeDefender defender;
+    public BeeDefender defender;
+
+    [SerializeField]
+    GameObject defenderPlaceholder;
+
+    [SerializeField]
+    Bug spawnBug;
+
+    public void SpawnBug()
+    {
+        Instantiate(spawnBug);
+    }
 
     public TextMeshProUGUI beeCount;
     public TextMeshProUGUI honeyCount;
@@ -38,7 +49,7 @@ public class GameManager : MonoBehaviour
 #endregion
 
 #region Helper Functions
-    bool checkPlacement(Vector3 pos)
+    bool checkPlacement(Vector2 pos)
     {
         RaycastHit2D[] hits = Physics2D.CircleCastAll(pos, 0.5f, Vector2.up, 0);
         foreach (var obj in hits)
@@ -52,12 +63,17 @@ public class GameManager : MonoBehaviour
     void trySpawnBee()
     {
         var spawnPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        spawnPos.z = Camera.main.nearClipPlane;
         var target = Singletons.hivemind.LastBug(BugType.lvl0);
         if (checkPlacement(spawnPos) && target != null)
         {
-            spawnPos.z = Camera.main.nearClipPlane;
-            target.WorkRoom = null;
-            Instantiate(defender, spawnPos, Quaternion.identity);
+            // target.WorkRoom = null;
+            // Instantiate(defender, spawnPos, Quaternion.identity);
+            Instantiate(defenderPlaceholder, spawnPos, Quaternion.identity);
+            target.Deploy(spawnPos);
+            // target.Deploy(spawnPos, () => {
+            //     Instantiate(defender, spawnPos, Quaternion.identity);
+            // });
         }
     }
 #endregion
