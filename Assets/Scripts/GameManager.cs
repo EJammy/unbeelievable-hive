@@ -75,8 +75,8 @@ public class GameManager : MonoBehaviour
                 placeholder.GetComponent<SpriteRenderer>().flipX = true;
             }
             target.Deploy(spawnPos, () => {
-                Destroy(placeholder);
-                Instantiate(defender, spawnPos, Quaternion.identity);
+                Destroy(placeholder.GetComponent<SpriteRenderer>());
+                placeholder.transform.parent = Instantiate(defender, spawnPos, Quaternion.identity).transform;
             });
         }
     }
