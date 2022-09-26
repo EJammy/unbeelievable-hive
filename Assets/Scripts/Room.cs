@@ -19,13 +19,14 @@ public class Room : MonoBehaviour
         }
     }
 
-    virtual protected void DestroyRoom()
+    protected virtual void DestroyRoom()
     {
         foreach (var item in Bugs)
         {
-            foreach (var bug in item.Value)
+            var arr = item.Value;
+            while (arr.Count > 0)
             {
-                bug.WorkRoom = Singletons.hivemind;
+                DecreaseBug(item.Key);
             }
         }
         Destroy(gameObject);

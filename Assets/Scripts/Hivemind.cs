@@ -38,4 +38,10 @@ public class Hivemind : Room
             upgradeMenu.HandleMenu();
         }
     }
+
+    protected override void DestroyRoom()
+    {
+        // End game here
+        Destroy(gameObject);
+    }
 }
