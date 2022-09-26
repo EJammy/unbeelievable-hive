@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
 #region Helper Functions
     bool checkPlacement(Vector2 pos)
     {
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(pos, 0.5f, Vector2.up, 0);
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(pos, 0.1f, Vector2.up, 0);
         foreach (var obj in hits)
         {
             // Debug.Log(obj.transform.tag);

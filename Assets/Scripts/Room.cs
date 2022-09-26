@@ -43,7 +43,7 @@ public class Room : MonoBehaviour
     public void AddBug(Bug target)
     {
         Bugs[target.type].Add(target);
-        Debug.Log("Added Bug to: " + gameObject.name + ' ' + level);
+        // Debug.Log("Added Bug to: " + gameObject.name + ' ' + level);
         UpdateLevel();
     }
 

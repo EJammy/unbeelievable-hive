@@ -17,8 +17,8 @@ public static class Statistics
     #endregion
 
     #region Enemy Statistics
-    public static float enemyHealth = 1;
-    public static float enemyDamage = 10;
+    public static float enemyHealth = 3;
+    public static float enemyDamage = 1;
     public static float enemySpeed = 1;
     #endregion
 

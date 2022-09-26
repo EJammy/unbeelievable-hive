@@ -63,15 +63,16 @@ public class Enemy : MonoBehaviour
         {
             if (currAttackTimer >= attackSpeed)
             {
-                StartCoroutine(Attack());
+                Attack();
             }
-            else if (!anim.GetBool("isAttacking"))
+            else
             {
                 currAttackTimer += Time.deltaTime;
             }
         } else
         {
             isAttacking = false;
+            anim.SetBool("isAttacking", false);
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse1) && GetComponent<Collider2D>().OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition)))
@@ -83,6 +84,7 @@ public class Enemy : MonoBehaviour
     {
         if (other.transform.CompareTag("Room"))
         {
+            anim.SetBool("isAttacking", true);
             isAttacking = true;
             target = other.gameObject;
             EnemyRB.velocity = Vector2.zero;
@@ -95,24 +97,21 @@ public class Enemy : MonoBehaviour
     #endregion
 
     #region Damage Functions
-    IEnumerator Attack()
+    void Attack()
     {
-        anim.SetBool("isAttacking", true);
         currAttackTimer = 0;
-        yield return new WaitForSeconds(1);
         target.transform.GetComponent<Room>().TakeDamage(Statistics.enemyDamage);
         Vector2 direction = Vector3.zero - transform.position;
         EnemyRB.velocity = direction.normalized * -0.001f;
-        anim.SetBool("isAttacking", false);
-        yield return null;
     }
 
     public void TakeDamage(float damage)
     {
         currHp -= damage;
-        GetComponent<SpriteRenderer>().color = Color.Lerp(Color.white, new Color(82, 0, 0), currHp / maxHp);
+        GetComponent<SpriteRenderer>().color = Color.Lerp(Color.white, new Color(82, 0, 0), 1 - currHp / maxHp);
         if (currHp <= 0)
         {
+            StopAllCoroutines();
             Destroy(this.gameObject);
         }
     }
