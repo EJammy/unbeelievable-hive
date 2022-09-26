@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     #endregion
 
     #region Health and Damage Variables
+    private float maxHp;
     private float currHp;
     [Tooltip("How often enemies attack")]
     public float attackSpeed;
@@ -33,7 +34,8 @@ public class Enemy : MonoBehaviour
     {
         EnemyRB = GetComponent<Rigidbody2D>();
         isAttacking = false;
-        currHp = Statistics.enemyHealth;
+        maxHp = Statistics.enemyHealth;
+        currHp = maxHp;
         currAttackTimer = 0;
         speed = Statistics.enemySpeed;
         sprite = GetComponent<SpriteRenderer>();
@@ -108,6 +110,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currHp -= damage;
+        GetComponent<SpriteRenderer>().color = Color.Lerp(Color.white, new Color(82, 0, 0), currHp / maxHp);
         if (currHp <= 0)
         {
             Destroy(this.gameObject);
