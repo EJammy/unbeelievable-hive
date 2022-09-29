@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour
         var allObjects = FindObjectsOfType<GameObject>();
         foreach (var obj in allObjects)
         {
-            if (endScreen.GetComponent<RectTransform>() == null && obj != this && obj.GetComponent<Camera>() == null)
+            if (obj.GetComponent<RectTransform>() == null && obj != this && obj.GetComponent<Camera>() == null)
                 Destroy(obj);
         }
         scoreText.text = "Score: " + (int)Time.timeSinceLevelLoad*10/3;

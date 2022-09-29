@@ -29,7 +29,7 @@ public static class Statistics
     #endregion
 
     #region Room Stats
-    public static float roomMaxHp = 15;
+    public static float roomMaxHp = 20;
     #endregion
 
     #region Upgrade Stats

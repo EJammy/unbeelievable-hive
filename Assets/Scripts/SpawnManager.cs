@@ -126,7 +126,7 @@ public class SpawnManager : MonoBehaviour
             lvlText.text = "Level: " + (gameStage + 1);
             Statistics.enemyHealth *= 1.65f;
             spawnRange = Mathf.Min(360, spawnRange + 20);
-            Statistics.enemySpeed += 0.15f;
+            // Statistics.enemySpeed += 0.15f;
             // Statistics.enemyDamage *= 1.1f;
             spawnTime = 2 + 16f / (1 + gameStage);
             numToSpawn = gameStage / 1 + 2;

@@ -43,6 +43,6 @@ public class Hivemind : Room
     {
         // End game here
         Singletons.gameManager.EndGame();
-        Destroy(gameObject);
+        // Destroy(gameObject);
     }
 }

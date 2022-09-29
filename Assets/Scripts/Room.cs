@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Room : MonoBehaviour
 {
     #region Health System
-    float hp = 15;
+    float hp = 20;
     public Slider hpSlider;
     public Slider progressSlider;
 
