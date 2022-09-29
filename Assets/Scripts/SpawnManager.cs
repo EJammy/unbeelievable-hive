@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -113,11 +114,27 @@ public class SpawnManager : MonoBehaviour
     }
     #endregion
 
+    public TextMeshProUGUI lvlText;
     #region Difficulty Scaling Functions
     private void ScaleDifficulty()
     {
         // # of enemies, time between spawns, range of target, time between waves (maybe happens later), hp of enemies
         int IDScale = Random.Range(0, 4);
+        if ((int)Time.timeSinceLevelLoad / 30 > gameStage)
+        {
+            gameStage++;
+            lvlText.text = "Level: " + (gameStage + 1);
+            Statistics.enemyHealth *= 1.65f;
+            spawnRange = Mathf.Min(360, spawnRange + 20);
+            Statistics.enemySpeed += 0.15f;
+            // Statistics.enemyDamage *= 1.1f;
+            spawnTime = 2 + 16f / (1 + gameStage);
+            numToSpawn = gameStage / 1 + 2;
+            Debug.Log(Time.timeSinceLevelLoad);
+        }
+
+        return;
+
         if (Time.timeSinceLevelLoad > 60 && gameStage == 0)
         {
             gameStage = 1;

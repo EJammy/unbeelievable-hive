@@ -62,6 +62,7 @@ public class UpgradeMenu : MonoBehaviour
         Statistics.upgradeAtkDmgPrice = CalcNewPrice(Statistics.upgradeAtkDmgPrice);
     }
 
+    int atkLevel = 0;
     public void UpgradeBeeAttackSpeed()
     {
         if (Statistics.honey < Statistics.upgradeAtkSpdPrice)
@@ -69,7 +70,8 @@ public class UpgradeMenu : MonoBehaviour
             return;
         }
         Statistics.honey -= Statistics.upgradeAtkSpdPrice;
-        Statistics.beeAttackSpeed -= 0.05f;
+        atkLevel += 1;
+        Statistics.beeAttackSpeed = 2f/(2 + atkLevel);
         Debug.Log("Attack speed " + Statistics.beeAttackSpeed);
         Statistics.upgradeAtkSpdPrice = CalcNewPrice(Statistics.upgradeAtkSpdPrice);
     }
@@ -85,6 +87,7 @@ public class UpgradeMenu : MonoBehaviour
     #region Price Functions
     private float CalcNewPrice(float oldPrice)
     {
+        return oldPrice * 2;
         if (oldPrice < 100)
         {
             return oldPrice + 20;

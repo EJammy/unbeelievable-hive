@@ -17,7 +17,7 @@ public static class Statistics
     #endregion
 
     #region Enemy Statistics
-    public static float enemyHealth = 3;
+    public static float enemyHealth = 2;
     public static float enemyDamage = 1;
     public static float enemySpeed = 1;
     #endregion
@@ -33,8 +33,8 @@ public static class Statistics
     #endregion
 
     #region Upgrade Stats
-    public static float upgradeAtkSpdPrice = 20;
-    public static float upgradeAtkDmgPrice = 20;
-    public static float upgradeWallHealthPrice = 20;
+    public static float upgradeAtkSpdPrice = 2;
+    public static float upgradeAtkDmgPrice = 2;
+    public static float upgradeWallHealthPrice = 2;
     #endregion
 }

@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Scene.unity
     guid: f46cb06c43e317c6e9bae4eb01aff60c
   - enabled: 1
-    path: Assets/Scenes/AlexTemp.unity
+    path: Assets/Scenes/Main Scene.unity
     guid: bfdfa7765ee6682468fb0df651c4972d
   m_configObjects: {}

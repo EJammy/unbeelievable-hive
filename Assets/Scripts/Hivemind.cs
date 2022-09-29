@@ -18,7 +18,7 @@ public class Hivemind : Room
 
     protected override void Start()
     {
-        for (var i = 0; i < 5; i++)
+        for (var i = 0; i < 8; i++)
             Singletons.gameManager.SpawnBug();
         // Instantiate(SpawnBug, transform.position, transform.rotation);
         // Instantiate(SpawnBug, transform.position, transform.rotation);
@@ -42,6 +42,7 @@ public class Hivemind : Room
     protected override void DestroyRoom()
     {
         // End game here
+        Singletons.gameManager.EndGame();
         Destroy(gameObject);
     }
 }

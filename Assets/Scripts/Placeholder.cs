@@ -23,7 +23,7 @@ public class Placeholder : MonoBehaviour
 
         // Debug.Log(hover + " " + hover2 + " " + (hits.Length != 0 && hits[0].transform == transform));
 
-        if (hover2 && Input.GetKey(KeyCode.Mouse1))
+        if (hover2 && Input.GetKey(KeyCode.Mouse1) && transform.parent != null)
         {
             Singletons.gameManager.SpawnBug();
             Destroy(transform.parent.gameObject);
@@ -33,13 +33,11 @@ public class Placeholder : MonoBehaviour
     bool hover;
     void OnMouseEnter()
     {
-        Debug.Log("Enter!");
         hover = true;
     }
 
     void OnMouseExit()
     {
-        Debug.Log("Exit!");
         hover = false;
     }
 }

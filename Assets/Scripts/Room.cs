@@ -89,8 +89,30 @@ public class Room : MonoBehaviour
     // Override this function to disable adding bug / change behaviour of click actions
     virtual protected void MouseAction()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0)) IncreaseBug(BugType.lvl0);
-        if (Input.GetKeyDown(KeyCode.Mouse1)) DecreaseBug(BugType.lvl0);
+        if (Input.GetKeyDown(KeyCode.Mouse0)) {
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                for (int i = 0; i < 5; i++)
+                    IncreaseBug(BugType.lvl0);
+            }
+            else
+            {
+                IncreaseBug(BugType.lvl0);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                for (int i = 0; i < 5; i++)
+                    DecreaseBug(BugType.lvl0);
+            }
+            else
+            {
+                DecreaseBug(BugType.lvl0);
+            }
+        }
     }
     #endregion
 

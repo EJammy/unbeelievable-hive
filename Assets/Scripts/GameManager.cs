@@ -23,12 +23,14 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI beeCount;
     public TextMeshProUGUI honeyCount;
+    public TextMeshProUGUI scoreText;
+    public GameObject endScreen;
 #endregion
 
 #region Unity Functions
     void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        // DontDestroyOnLoad(gameObject);
         Singletons.gameManager = this;
     }
 
@@ -79,6 +81,20 @@ public class GameManager : MonoBehaviour
                 placeholder.transform.parent = Instantiate(defender, spawnPos, Quaternion.identity).transform;
             });
         }
+    }
+#endregion
+
+#region Scene Management?
+    public void EndGame()
+    {
+        var allObjects = FindObjectsOfType<GameObject>();
+        foreach (var obj in allObjects)
+        {
+            if (endScreen.GetComponent<RectTransform>() == null && obj != this && obj.GetComponent<Camera>() == null)
+                Destroy(obj);
+        }
+        scoreText.text = "Score: " + (int)Time.timeSinceLevelLoad*10/3;
+        endScreen.SetActive(true);
     }
 #endregion
 }
