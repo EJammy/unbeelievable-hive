@@ -124,7 +124,14 @@ public class SpawnManager : MonoBehaviour
         {
             gameStage++;
             lvlText.text = "Level: " + (gameStage + 1);
-            Statistics.enemyHealth *= 1.65f;
+            if (gameStage < 12)
+            {
+                Statistics.enemyHealth *= 1.65f;
+            }
+            else
+            {
+                Statistics.enemyHealth *= 1.4f;
+            }
             spawnRange = Mathf.Min(360, spawnRange + 20);
             // Statistics.enemySpeed += 0.15f;
             // Statistics.enemyDamage *= 1.1f;
